@@ -36,7 +36,7 @@ def create_or_update_existing_profile(social_profile_token):
             session.commit()
 
             logging.info('Updated account!')
-
-            return savory_token_client.create_savory_token(db_account)
+            
+            return {'token': savory_token_client.create_savory_token(db_account)}
     else:
         return facebook_client.create_facebook_error_response()
