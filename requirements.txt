@@ -8,6 +8,7 @@ itsdangerous==0.24
 Jinja2==2.10
 MarkupSafe==1.0
 psycopg2==2.7.5
+PyJWT==1.6.4
 requests==2.19.1
 SQLAlchemy==1.2.10
 urllib3==1.23

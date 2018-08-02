@@ -37,6 +37,7 @@ For security reasons, a lot of critical constant values are hidden in environmen
 - App id for Facebook (`SAVORY_FB_APP_ID`)
 - App secret for Facebook (`SAVORY_FB_APP_SECRET`)
 - URL to the PostgresQL database (`SAVORY_DB_URL`)
+- JWT secret (`SAVORY_JWT_SECRET`)
 
 There is some amount of irony in this statement because this application is in a stage where no one cares enough to do 
 something malicious with that information. If you are one of those people, I'm pretty sure browsing cat pictures on 
