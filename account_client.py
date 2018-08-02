@@ -33,6 +33,8 @@ def create_or_update_existing_profile(social_profile_token):
             db_account.last_name = account.last_name
             db_account.profile_image = account.profile_image
 
+            session.commit()
+
             logging.info('Updated account!')
 
             return savory_token_client.create_savory_token(db_account)
