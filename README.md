@@ -52,6 +52,7 @@ gunicorn -w 2 -b 0.0.0.0:<put_port_number_here> routes:app
 ## Contributing
 
 - Submit pull requests
+- If your pull request installs a new requirement, please run `pip3 freeze > requirements.txt` before submitting a PR
 - Don't write spaghetti code
 - Actually QA your code before submitting a pull request
 - Maybe one day unit tests will be a requirement
