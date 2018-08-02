@@ -49,6 +49,9 @@ Finally, you're ready to deploy the application. To deploy the application local
 gunicorn -w 2 -b 0.0.0.0:<put_port_number_here> routes:app
 ```
 
+If you are suddenly getting errors related to missing certain library requirements, please check to see if you have a 
+virtualenv running. If not, please run it and try again.
+
 ## Contributing
 
 - Submit pull requests
