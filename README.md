@@ -42,7 +42,7 @@ For security reasons, a lot of critical constant values are hidden in environmen
 There is some amount of irony in this statement because this application is in a stage where no one cares enough to do 
 something malicious with that information. If you are one of those people, I'm pretty sure browsing cat pictures on 
 reddit is a better use of your time. If you are someone who is or will be developing this application, please 
-ping[@jchio001](https://github.com/jchio001) for the appropriate values.
+ping [@jchio001](https://github.com/jchio001) for the appropriate values.
 
 Finally, you're ready to deploy the application. To deploy the application locally, run:
 ```bash
