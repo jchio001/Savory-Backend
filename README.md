@@ -18,7 +18,7 @@ Before beginning development, please ensure that the following tools are install
 - Python 3 (NOTE: Python 2.7 is the default on Mac!. [This guide](
 https://docs.python-guide.org/starting/install3/osx/) gives a pretty good rundown on installing Python 3 with Brew. 
 Be aware that there's 2 versions of Python on your laptop and to specific Python 3, use python3/pip3 instead! Currently, 
-this app is using<b>Python 3.7</b>)
+this app is using <b>Python 3.7</b>)
 - Virtualenv (This should be done after installing Python3! Virtualenvs allows us to isolate python dependencies for a 
 project, meaning that we have multiple projects cleanly running multiple different versions of a library. [Here's a 
 good guide on installing and setting up a virtualenv.](
