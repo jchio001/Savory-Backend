@@ -12,5 +12,13 @@ logging.basicConfig(level=logging.INFO)
 def connect_with_social_platform():
     return json.dumps(account_client.create_or_update_existing_profile(request.args.get('token')))
 
+
+# Since everything that we return will literally be a json, might as well use @app.after_request
+# instead of attaching a custom annotation (aka decorators in Python land)
+@app.after_request
+def set_content_type(response):
+    response.headers['Content-Type'] = 'application/json'
+    return response
+
 if __name__ == "__main__":
     app.run()

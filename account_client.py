@@ -18,7 +18,7 @@ def create_or_update_existing_profile(social_profile_token):
             session.add(account)
             session.flush()
             session.commit()
-            return savory_token_client.create_savory_token(account)
+            return {'token': savory_token_client.create_savory_token(account)}
         except IntegrityError:
             session.rollback()
             logging.warning('Account already exists in the system!')
