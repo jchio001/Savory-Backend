@@ -1,7 +1,7 @@
 This document contains a list of exposed endpoints and descriptions of what they do and how to interact with them. The 
 base URL to hit up endpoints for our server is http://savory-backend.herokuapp.com. 
 
-## /connect?token={facebook_token}
+## (GET) /connect?token={facebook_token}
 
 This endpoint is for logging in/creating an account to the Savory platform. If an account already exists under the 
 token's Facebook account, a new account will not be created. In exchange for a Facebook token, this endpoint will 
@@ -17,3 +17,22 @@ Returns:
 }
 ```
 
+## (POST) /photo
+
+This endpoint is for uploading photos to the Savory platform. It'll take in a photo, upload it to a S3 bucket, and 
+returns a photo object containing information about the photo.
+
+Requires:
+- `Authorization (Header)`: A JWT auth token that originated from our backend
+- `Content-Type (Header)`: Should be set to `multipart/form-data`
+- `image (Body, form-data)`: An image to be posted to the Savory platform
+
+Returns:
+```json
+{
+    "id": <Integer>. The id of the photo.
+    "account_id": <Integer>. The id of the account that posted it.
+    "photo_url": <String>. The url of the uploaded image.
+    "creation_date": <Long>. The upload date in epoch time.
+}
+```
