@@ -5,6 +5,7 @@ import savory_token_client
 from models import Account, session
 from sqlalchemy.exc import IntegrityError
 
+
 def create_or_update_existing_profile(social_profile_token):
     fb_profile_response = facebook_client.get_profile(social_profile_token)
 

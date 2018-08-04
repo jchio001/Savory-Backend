@@ -1,4 +1,5 @@
-from sqlalchemy import BigInteger, create_engine, Column,  DateTime, Index, Integer, Sequence, String, UniqueConstraint
+from sqlalchemy import BigInteger, create_engine, Column, DateTime, ForeignKey, Integer, Sequence, String, \
+    UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
@@ -33,6 +34,21 @@ class Account(base):
 
     # Unique constraint already establishes a btree!
     __table_args__ = (UniqueConstraint('social_profile_id', 'social_profile_type', name='_social_profile_uc'),)
+
+
+class Photo(base):
+    __tablename__ = 'photo'
+
+    id = Column(Integer, Sequence('photo_id_sequence', start=1, increment=1), primary_key=True)
+    account_id = Column(Integer, ForeignKey('account.id'), nullable=False)
+    photo_url = Column(String, nullable=False)
+    creation_date = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+
+    def to_dict(self):
+        return {'id': self.id,
+                'account_id': self.account_id,
+                'photo_url': self.photo_url,
+                'creation_time': int(self.creation_date.timestamp())}
 
 
 # Sets up a sqlalchemy session
