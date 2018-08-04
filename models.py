@@ -40,9 +40,9 @@ class Photo(base):
     __tablename__ = 'photo'
 
     id = Column(Integer, Sequence('photo_id_sequence', start=1, increment=1), primary_key=True)
-    account_id = Column(Integer, ForeignKey('account.id'), nullable=False)
+    account_id = Column(Integer, ForeignKey('account.id'), nullable=False, index=True)
     photo_url = Column(String, nullable=False)
-    creation_date = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    creation_date = Column(DateTime(timezone=True), server_default=func.now(), nullable=False, index=True)
 
     def to_dict(self):
         return {'id': self.id,
