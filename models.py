@@ -35,6 +35,13 @@ class Account(base):
     # Unique constraint already establishes a btree!
     __table_args__ = (UniqueConstraint('social_profile_id', 'social_profile_type', name='_social_profile_uc'),)
 
+    def to_dict(self):
+        return {'id': self.id,
+                'first_name': self.first_name,
+                'last_name': self.last_name,
+                'profile_image': self.profile_image,
+                'creation_date': int(self.creation_date.timestamp())}
+
 
 class Photo(base):
     __tablename__ = 'photo'

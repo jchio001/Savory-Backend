@@ -16,8 +16,14 @@ def connect_with_social_platform():
     return json.dumps(response_dict), status_code
 
 
+@app.route('/me')
+@ValidateToken('url_param')
+def get_my_profile(account):
+    return json.dumps(account.to_dict())
+
+
 @app.route('/photo', methods=['POST'])
-@ValidateToken
+@ValidateToken('header')
 def post_photo(account):
     response_dict, status_code = photo_client.post_photo(account, request)
     return json.dumps(response_dict), status_code

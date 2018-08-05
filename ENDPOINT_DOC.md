@@ -36,3 +36,22 @@ Returns:
     "creation_date": <Long>. The upload date in epoch time.
 }
 ```
+
+## (GET) /me?token={savory_token}
+
+This endpoint is for getting the profile of the token's owner. By exposing this endpoint, this means that the client 
+won't need to maintain the account's id as well, and can rely purely on the token to get information.
+
+Requires:
+-`savory_token`: A JWT auth token from the Savory platform
+
+Returns:
+```json
+{
+    "id": <Integer> The id of the account,
+    "first_name": <String> The first name of the account's owner,
+    "last_name": <String> The last name of the account's owner',
+    "profile_image": <String> The account's profile picture,
+    "creation_date": <Long>. The account's creation date in epoch time
+}
+```
