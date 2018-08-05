@@ -1,4 +1,5 @@
 from boto3.exceptions import S3UploadFailedError
+from datetime import datetime
 from models import Photo, session
 from status_codes import HTTP_STATUS_OK, HTTP_STATUS_BAD_REQUEST
 
@@ -26,3 +27,21 @@ def post_photo(account, request):
     except S3UploadFailedError as e:
         logging.error(str(e))
         return {'error': 'Failed to upload image!'}, HTTP_STATUS_BAD_REQUEST
+
+
+STUBBED_PHOTO_URL = 'https://instagram.fsnc1-1.fna.fbcdn.net/vp/221ff3b2f4a886a11b95d1dcd6b0ef73/5BF33D47' \
+                    '/t51.2885-15/e35/38240443_573642699698521_4433770773466841088_n.jpg'
+
+
+# Returns a page of 9 photos. Currently, this is STUBBED!
+def get_photos():
+    stubbed_page = list()
+
+    photo = Photo(id=32432, account_id=23432423, photo_url=STUBBED_PHOTO_URL, creation_date=datetime.today())
+    for i in range(0, 9):
+        stubbed_page.append(photo)
+
+    return stubbed_page
+
+
+

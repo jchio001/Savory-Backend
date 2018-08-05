@@ -15,11 +15,11 @@ https://github.com/jchio001/Savory-Backend.git
 ```
 
 Before beginning development, please ensure that the following tools are installed on your laptop:
-- Python 3 (NOTE: Python 2.7 is the default on Mac!. [This guide](
+- Python 3 (NOTE: Python 2.7 is the default on Mac! [This guide](
 https://docs.python-guide.org/starting/install3/osx/) gives a pretty good rundown on installing Python 3 with Brew. 
-Be aware that there's 2 versions of Python on your laptop and to specific Python 3, use python3/pip3 instead! Currently, 
+Be aware that there's 2 versions of Python on your laptop and to specify Python 3, use python3/pip3 instead! Currently, 
 this app is using <b>Python 3.7</b>)
-- Virtualenv (This should be done after installing Python3! Virtualenvs allows us to isolate python dependencies for a 
+- virtualenv (This should be done after installing Python3! Virtualenvs allows us to isolate python dependencies for a 
 project, meaning that we have multiple projects cleanly running multiple different versions of a library. [Here's a 
 good guide on installing and setting up a virtualenv.](
 https://packaging.python.org/guides/installing-using-pip-and-virtualenv/))  
@@ -55,7 +55,7 @@ virtualenv running. If not, please run it and try again.
 ## Contributing
 
 - Submit pull requests
-- If your pull request installs a new requirement, please run `pip3 freeze > requirements.txt` before submitting a PR
+- If your pull request installs new requirements, please run `pip3 freeze > requirements.txt` before submitting a PR
 - Don't write spaghetti code
 - Actually QA your code before submitting a pull request
 - Maybe one day unit tests will be a requirement

@@ -17,7 +17,7 @@ import time
 # - Does the token belong to a user in our database?
 # - Has the token expired?
 # If the token has gone through all four of these checks, an Account object will be magic'd into your endpoint for you
-# to consume with <insert generic CRUD business logic
+# to consume with <insert generic CRUD business logic>
 def ValidateToken(token_location):
     def validate_token_wrapper(f):
         @wraps(f)

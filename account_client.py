@@ -1,8 +1,9 @@
 import facebook_client
 import logging
+import photo_client
 import savory_token_client
 
-from models import Account, session
+from models import Account, Photo, session
 from sqlalchemy.exc import IntegrityError
 from status_codes import HTTP_STATUS_OK
 
@@ -49,3 +50,18 @@ def get_account(account_id):
         .query(Account)\
         .filter_by(id=account_id)\
         .first()
+
+
+def get_account_info(account):
+    return AccountInfo(account=account, photo_page=photo_client.get_photos()).to_dict(), HTTP_STATUS_OK
+
+
+class AccountInfo:
+
+    def __init__(self, account, photo_page):
+        self.account = account
+        self.photo_page = photo_page
+
+    def to_dict(self):
+        return {'account': self.account.to_dict(),
+                'photos': list(map(Photo.to_dict, self.photo_page))}

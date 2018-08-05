@@ -19,7 +19,8 @@ def connect_with_social_platform():
 @app.route('/me')
 @ValidateToken('url_param')
 def get_my_profile(account):
-    return json.dumps(account.to_dict())
+    response_dict, status_code = account_client.get_account_info(account)
+    return json.dumps(response_dict), status_code
 
 
 @app.route('/photo', methods=['POST'])

@@ -13,7 +13,7 @@ Requires:
 Returns:
 ```json
 {
-  'token': <String>. A JWT auth token that provides the client access to other endpoints of our platform.
+  'token': <String>. A JWT auth token that provides the client access to other endpoints of our platform
 }
 ```
 
@@ -30,10 +30,10 @@ Requires:
 Returns:
 ```json
 {
-    "id": <Integer>. The id of the photo.
-    "account_id": <Integer>. The id of the account that posted it.
-    "photo_url": <String>. The url of the uploaded image.
-    "creation_date": <Long>. The upload date in epoch time.
+    "id": <Integer>. The id of the photo
+    "account_id": <Integer>. The id of the account that posted it
+    "photo_url": <String>. The url of the uploaded image
+    "creation_date": <Long>. The upload date in epoch time
 }
 ```
 
@@ -48,10 +48,21 @@ Requires:
 Returns:
 ```json
 {
-    "id": <Integer> The id of the account,
-    "first_name": <String> The first name of the account's owner,
-    "last_name": <String> The last name of the account's owner',
-    "profile_image": <String> The account's profile picture,
-    "creation_date": <Long>. The account's creation date in epoch time
+    "account": {
+        "id": <Integer> The id of the account
+        "first_name": <String> The first name of the account's owner
+        "last_name": <String> The last name of the account's owner'
+        "profile_image": <String> The account's profile picture,
+        "creation_date": <Long>. The account's creation date in epoch time
+    },
+    "photos": [
+        {
+            "id": <Integer> The id of the photo
+            "account_id": <Integer> The id of the account that posted it
+            "photo_url": <String> The url of the photo
+            "creation_time": <Long> The upload time in epoch time
+        },
+        ...
+    ]
 }
 ```
