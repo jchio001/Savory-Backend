@@ -4,6 +4,7 @@ import savory_token_client
 
 from models import Account, session
 from sqlalchemy.exc import IntegrityError
+from status_codes import HTTP_STATUS_OK
 
 
 def create_or_update_existing_profile(social_profile_token):
@@ -19,7 +20,7 @@ def create_or_update_existing_profile(social_profile_token):
             session.add(account)
             session.flush()
             session.commit()
-            return {'token': savory_token_client.create_savory_token(account)}
+            return {'token': savory_token_client.create_savory_token(account)}, HTTP_STATUS_OK
         except IntegrityError:
             session.rollback()
             logging.warning('Account already exists in the system!')
@@ -38,7 +39,7 @@ def create_or_update_existing_profile(social_profile_token):
 
             logging.info('Updated account!')
             
-            return {'token': savory_token_client.create_savory_token(db_account)}
+            return {'token': savory_token_client.create_savory_token(db_account)}, HTTP_STATUS_OK
     else:
         return facebook_client.create_facebook_error_response()
 

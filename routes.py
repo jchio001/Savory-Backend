@@ -12,13 +12,15 @@ logging.basicConfig(level=logging.INFO)
 
 @app.route('/connect', methods=['GET'])
 def connect_with_social_platform():
-    return json.dumps(account_client.create_or_update_existing_profile(request.args.get('token')))
+    response_dict, status_code = account_client.create_or_update_existing_profile(request.args.get('token'))
+    return json.dumps(response_dict), status_code
 
 
 @app.route('/photo', methods=['POST'])
 @ValidateToken
 def post_photo(account):
-    return json.dumps(photo_client.post_photo(account, request))
+    response_dict, status_code = photo_client.post_photo(account, request)
+    return json.dumps(response_dict), status_code
 
 
 # Since everything that we return will literally be a json, might as well use @app.after_request
