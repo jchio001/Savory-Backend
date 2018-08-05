@@ -19,8 +19,6 @@ s3_client = boto3.client('s3', aws_access_key_id=aws_access_key_id, aws_secret_a
 def upload_photo(account_id, file):
     logging.info('Uploading file %s to S3 Bucket' % file.filename)
     file_name, file_extension = os.path.splitext(file.filename)
-    logging.info(file_name)
-    logging.info(file_extension)
 
     hashed_name = '%d_%d_%d%s' % (hash(account_id), int(time.time()), hash(file_name), file_extension)
 

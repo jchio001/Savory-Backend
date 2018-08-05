@@ -6,16 +6,14 @@ import s3_client
 import savory_token_client
 
 
-def post_photo(request):
+def post_photo(account, request):
     if 'image' not in request.files:
         return {'error': 'No image attached!'}
 
     file = request.files['image']
 
     try:
-        account_id = savory_token_client \
-            .decode_savory_token(request.headers.get('Authorization')) \
-            .get('id')
+        account_id = account.id
 
         photo_url = s3_client.upload_photo(account_id, file)
 

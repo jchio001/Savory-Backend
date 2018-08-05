@@ -17,8 +17,8 @@ def connect_with_social_platform():
 
 @app.route('/photo', methods=['POST'])
 @ValidateToken
-def post_photo():
-    return json.dumps(photo_client.post_photo(request))
+def post_photo(account):
+    return json.dumps(photo_client.post_photo(account, request))
 
 
 # Since everything that we return will literally be a json, might as well use @app.after_request

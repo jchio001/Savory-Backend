@@ -41,3 +41,10 @@ def create_or_update_existing_profile(social_profile_token):
             return {'token': savory_token_client.create_savory_token(db_account)}
     else:
         return facebook_client.create_facebook_error_response()
+
+
+def get_account(account_id):
+    return session\
+        .query(Account)\
+        .filter_by(id=account_id)\
+        .first()
