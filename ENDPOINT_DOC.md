@@ -11,7 +11,7 @@ Requires:
 - `facebook_token`: A Facebook access token retrieved from successfully logging into the Facebook platform.
 
 Returns:
-```json
+```
 {
   'token': <String>. A JWT auth token that provides the client access to other endpoints of our platform
 }
@@ -28,7 +28,7 @@ Requires:
 - `image (Body, form-data)`: An image to be posted to the Savory platform
 
 Returns:
-```json
+```
 {
     "id": <Integer>. The id of the photo
     "account_id": <Integer>. The id of the account that posted it
@@ -46,7 +46,7 @@ Requires:
 -`savory_token`: A JWT auth token from the Savory platform
 
 Returns:
-```json
+```
 {
     "account": {
         "id": <Integer> The id of the account
