@@ -4,11 +4,20 @@ from jwt import DecodeError
 from status_codes import HTTP_STATUS_BAD_REQUEST, HTTP_STATUS_UNAUTHORIZED
 
 import account_client
-import logging
 import savory_token_client
 import time
 
 
+# This is a collection of all annotations (known as decorators in Python land) that will intercept an endpoint before
+# executing the endpoint's core logic.
+
+# This decorator validates a request's token. Validations include:
+# - Is there actually a token attached to the request?
+# - Is the token one that's encoded by us?
+# - Does the token belong to a user in our database?
+# - Has the token expired?
+# If the token has gone through all four of these checks, an Account object will be magic'd into your endpoint for you
+# to consume with <insert generic CRUD business logic
 def ValidateToken(f):
     @wraps(f)
     def validate_token(*args, **kwargs):
