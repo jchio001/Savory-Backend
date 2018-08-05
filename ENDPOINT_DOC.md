@@ -60,7 +60,7 @@ Returns:
             "id": <Integer> The id of the photo
             "account_id": <Integer> The id of the account that posted it
             "photo_url": <String> The url of the photo
-            "creation_time": <Long> The upload time in epoch time
+            "creation_date": <Long> The upload time in epoch time
         },
         ...
     ]

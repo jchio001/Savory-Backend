@@ -55,7 +55,7 @@ class Photo(base):
         return {'id': self.id,
                 'account_id': self.account_id,
                 'photo_url': self.photo_url,
-                'creation_time': int(self.creation_date.timestamp())}
+                'creation_date': int(self.creation_date.timestamp())}
 
 
 # Sets up a sqlalchemy session
