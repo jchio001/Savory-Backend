@@ -13,11 +13,11 @@ def post_photo(request):
     file = request.files['image']
 
     try:
-        photo_url = s3_client.upload_photo(file)
-
         account_id = savory_token_client \
             .decode_savory_token(request.headers.get('Authorization')) \
             .get('id')
+
+        photo_url = s3_client.upload_photo(account_id, file)
 
         photo = Photo(account_id=account_id, photo_url=photo_url)
         session.add(photo)
