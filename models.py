@@ -4,21 +4,11 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import func
 
-import json
 import os
 
 db_url = os.environ['SAVORY_DB_URL']
 db = create_engine(db_url)
 base = declarative_base()
-
-
-# TODO: This is unused and may not be needed!
-def model_to_json(model):
-    d = {}
-    for column in model.__table__.columns:
-        d[column.name] = str(getattr(model, column.name))
-
-    return json.dumps(d)
 
 
 class Account(base):
