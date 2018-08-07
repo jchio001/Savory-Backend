@@ -33,12 +33,12 @@ STUBBED_PHOTO_URL = 'https://instagram.fsnc1-1.fna.fbcdn.net/vp/221ff3b2f4a886a1
                     '/t51.2885-15/e35/38240443_573642699698521_4433770773466841088_n.jpg'
 
 
-# Returns a page of 9 photos. Currently, this is STUBBED!
+# Returns a page of 15 photos. Currently, this is STUBBED!
 def get_photos():
     stubbed_page = list()
 
     photo = Photo(id=32432, account_id=23432423, photo_url=STUBBED_PHOTO_URL, creation_date=datetime.today())
-    for i in range(0, 9):
+    for i in range(0, 15):
         stubbed_page.append(photo)
 
     return stubbed_page
