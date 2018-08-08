@@ -37,7 +37,7 @@ Returns:
 }
 ```
 
-## (GET) /me?token={savory_token}
+## (GET) /account/me?token={savory_token}
 
 This endpoint is for getting the profile of the token's owner. By exposing this endpoint, this means that the client 
 won't need to maintain the account's id as well, and can rely purely on the token to get information.

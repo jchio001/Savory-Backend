@@ -16,7 +16,7 @@ def connect_with_social_platform():
     return json.dumps(response_dict), status_code
 
 
-@app.route('/me')
+@app.route('/account/me')
 @ValidateToken('url_param')
 def get_my_profile(account):
     response_dict, status_code = account_client.get_account_info(account)
