@@ -34,7 +34,7 @@ STUBBED_PHOTO_URL = 'https://instagram.fsnc1-1.fna.fbcdn.net/vp/221ff3b2f4a886a1
 
 
 # Returns a page of 15 photos. Currently, this is STUBBED!
-def get_photos():
+def get_photos_page_for_account(account=None, last_id=None):
     stubbed_page = list()
 
     photo = Photo(id=32432, account_id=23432423, photo_url=STUBBED_PHOTO_URL, creation_date=datetime.today())

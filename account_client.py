@@ -47,15 +47,17 @@ def get_account(account_id):
 
 
 def get_account_info(account):
-    return AccountInfo(account=account, photo_page=photo_client.get_photos()).to_dict(), HTTP_STATUS_OK
+    return AccountInfo(account=account,
+                       photos_page=photo_client.get_photos_page_for_account()).to_dict(), \
+           HTTP_STATUS_OK
 
 
 class AccountInfo:
 
-    def __init__(self, account, photo_page):
+    def __init__(self, account, photos_page):
         self.account = account
-        self.photo_page = photo_page
+        self.photos_page = photos_page
 
     def to_dict(self):
         return {'account': self.account.to_dict(),
-                'photos': list(map(Photo.to_dict, self.photo_page))}
+                'photos': list(map(Photo.to_dict, self.photos_page))}

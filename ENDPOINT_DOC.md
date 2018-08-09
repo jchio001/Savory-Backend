@@ -8,7 +8,7 @@ token's Facebook account, a new account will not be created. In exchange for a F
 exchange it for a JWT auth token that is used to access our platform.
 
 Requires:
-- `facebook_token`: A Facebook access token retrieved from successfully logging into the Facebook platform.
+- `facebook_token (URL parameter)`: A Facebook access token retrieved from successfully logging into the Facebook platform.
 
 Returns:
 ```
@@ -65,4 +65,26 @@ Returns:
         ...
     ]
 }
+```
+
+## (GET) /account/me/photos?last_id={<photo_id>}
+
+This endpoint is getting a page of 15 photos the token's owner has uploaded after a given photo (last_id represents the 
+id of this photo). If last_id is not passed in, the 15 most recently uploaded photos will be returned.
+
+Requires:
+- `Authorization (Header)`: A JWT auth token that originated from our backend
+- `last_id (URL parameter)`: The id of the photo to fetch relative to.
+
+Returns:
+```
+[
+    {
+        "id": <Integer> The id of the photo
+        "account_id": <Integer> The id of the account that posted it
+        "photo_url": <String> The url of the photo
+        "creation_date": <Long> The upload time in epoch time
+    },
+    ...
+]
 ```
