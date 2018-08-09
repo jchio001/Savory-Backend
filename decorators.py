@@ -1,9 +1,11 @@
-from flask import jsonify, request
+from facebook_client import FacebookException
+from flask import jsonify, request, Response
 from functools import wraps
 from jwt import DecodeError
 from status_codes import HTTP_STATUS_BAD_REQUEST, HTTP_STATUS_UNAUTHORIZED
 
 import account_client
+import facebook_client
 import savory_token_client
 import time
 
@@ -56,3 +58,19 @@ def ValidateToken(token_location):
         return validate_token
 
     return validate_token_wrapper
+
+
+# This decorator converts a token from Facebook into a FacebookAccount object and passes that object into the endpoint
+# method.
+def ValidateFacebookToken(f):
+    @wraps(f)
+    def validate_facebook_token(*args, **kwargs):
+        try:
+            facebook_account = facebook_client.get_profile(request.args.get('token'))
+            return f(*args, **kwargs, facebook_account=facebook_account)
+        except FacebookException as e:
+            response = Response(e.error_body)
+            response.status_code = e.status_code
+            return response
+
+    return validate_facebook_token
