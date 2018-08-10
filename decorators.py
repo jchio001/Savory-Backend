@@ -65,6 +65,12 @@ def ValidateToken(token_location):
 def ValidateFacebookToken(f):
     @wraps(f)
     def validate_facebook_token(*args, **kwargs):
+        token = request.args.get('token')
+        if not token:
+            response = jsonify({'error': 'Missing Facebook token'})
+            response.status_code = HTTP_STATUS_BAD_REQUEST
+            return response
+
         try:
             facebook_account = facebook_client.get_profile(request.args.get('token'))
             return f(*args, **kwargs, facebook_account=facebook_account)
