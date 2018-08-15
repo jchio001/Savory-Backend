@@ -20,44 +20,40 @@ import time
 # - Has the token expired?
 # If the token has gone through all four of these checks, an Account object will be magic'd into your endpoint for you
 # to consume with <insert generic CRUD business logic>
-def ValidateToken(token_location):
-    def validate_token_wrapper(f):
-        @wraps(f)
-        def validate_token(*args, **kwargs):
+def ValidateToken(f):
+    @wraps(f)
+    def validate_token(*args, **kwargs):
 
-            encoded_savory_token = request.headers.get('Authorization') if token_location == 'header' \
-                else request.args.get('token')
+        encoded_savory_token = request.headers.get('Authorization')
 
-            if not encoded_savory_token:
-                response = jsonify({'error': 'Missing token'})
-                response.status_code = HTTP_STATUS_BAD_REQUEST
-                return response
+        if not encoded_savory_token:
+            response = jsonify({'error': 'Missing token'})
+            response.status_code = HTTP_STATUS_BAD_REQUEST
+            return response
 
-            try:
-                decoded_token = savory_token_client.decode_savory_token(encoded_savory_token)
-            except DecodeError:
-                response = jsonify({'error': 'Invalid token.'})
-                response.status_code = HTTP_STATUS_BAD_REQUEST
-                return response
+        try:
+            decoded_token = savory_token_client.decode_savory_token(encoded_savory_token)
+        except DecodeError:
+            response = jsonify({'error': 'Invalid token.'})
+            response.status_code = HTTP_STATUS_BAD_REQUEST
+            return response
 
-            account = account_client.get_account(decoded_token.get('id'))
+        account = account_client.get_account(decoded_token.get('id'))
 
-            if not account:
-                response = jsonify({'error': 'Account id does not exist in the system.'})
-                response.status_code = HTTP_STATUS_BAD_REQUEST
-                return response
+        if not account:
+            response = jsonify({'error': 'Account id does not exist in the system.'})
+            response.status_code = HTTP_STATUS_BAD_REQUEST
+            return response
 
-            now = int(time.time())
-            if decoded_token.get('expires_at') < now:
-                response = jsonify({'error': 'Expired token.'})
-                response.status_code = HTTP_STATUS_UNAUTHORIZED
-                return response
+        now = int(time.time())
+        if decoded_token.get('expires_at') < now:
+            response = jsonify({'error': 'Expired token.'})
+            response.status_code = HTTP_STATUS_UNAUTHORIZED
+            return response
 
-            return f(*args, account=account, **kwargs)
+        return f(*args, account=account, **kwargs)
 
-        return validate_token
-
-    return validate_token_wrapper
+    return validate_token
 
 
 # This decorator converts a token from Facebook into a FacebookAccount object and passes that object into the endpoint

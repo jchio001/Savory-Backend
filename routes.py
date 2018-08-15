@@ -20,21 +20,21 @@ def connect_with_social_platform(facebook_account):
 
 
 @app.route('/account/me')
-@ValidateToken('url_param')
+@ValidateToken
 def get_my_profile(account):
     response_dict, status_code = account_client.get_account_info(account)
     return json.dumps(response_dict), status_code
 
 
 @app.route('/account/me/photos', methods=['GET'])
-@ValidateToken('header')
+@ValidateToken
 def get_my_photos(account):
     photos_page = photo_client.get_photos_page_for_account(account, request.args.get('last_id'))
     return json.dumps(list(map(Photo.to_dict, photos_page))), HTTP_STATUS_OK
 
 
 @app.route('/photo', methods=['POST'])
-@ValidateToken('header')
+@ValidateToken
 def post_photo(account):
     response_dict, status_code = photo_client.post_photo(account, request)
     return json.dumps(response_dict), status_code

@@ -37,13 +37,13 @@ Returns:
 }
 ```
 
-## (GET) /account/me?token={savory_token}
+## (GET) /account/me
 
 This endpoint is for getting the profile of the token's owner. By exposing this endpoint, this means that the client 
 won't need to maintain the account's id as well, and can rely purely on the token to get information.
 
 Requires:
--`savory_token`: A JWT auth token from the Savory platform
+-`Authorization (Header)`: A JWT auth token from the Savory platform
 
 Returns:
 ```
