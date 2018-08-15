@@ -49,6 +49,6 @@ class FacebookAccount:
 
 
 class FacebookException(Exception):
-    def __init(self, response):
+    def __init__(self, response):
         self.status_code = response.status_code
         self.error_body = response.content
