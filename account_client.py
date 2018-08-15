@@ -8,35 +8,32 @@ from sqlalchemy.exc import IntegrityError
 from status_codes import HTTP_STATUS_OK
 
 
-def create_or_update_existing_profile(facebook_account):
-    account = Account(social_profile_id=facebook_account.id, social_profile_type='facebook',
-                      first_name=facebook_account.first_name, last_name=facebook_account.last_name,
-                      profile_image=facebook_account.profile_image)
+def create_or_update_existing_account(facebook_account):
+    account = session \
+        .query(Account) \
+        .filter_by(social_profile_id=facebook_account.id,
+                   social_profile_type='facebook') \
+        .first()
 
-    try:
-        session.add(account)
-        session.flush()
-        session.commit()
-        return {'token': savory_token_client.create_savory_token(account)}, HTTP_STATUS_OK
-    except IntegrityError:
-        session.rollback()
-        logging.warning('Account already exists in the system!')
+    if not account:
+        try:
+            account = Account(social_profile_id=facebook_account.id, social_profile_type='facebook',
+                              first_name=facebook_account.first_name, last_name=facebook_account.last_name,
+                              profile_image=facebook_account.profile_image)
+            session.add(account)
+            session.flush()
+            session.commit()
+        except IntegrityError:
+            session.rollback()
+            logging.warning('Account already exists in the system!')
 
-        db_account = session \
-            .query(Account) \
-            .filter_by(social_profile_id=account.social_profile_id,
-                       social_profile_type=account.social_profile_type) \
-            .first()
+            account = session \
+                .query(Account) \
+                .filter_by(social_profile_id=facebook_account.id,
+                           social_profile_type='facebook') \
+                .first()
 
-        db_account.first_name = account.first_name
-        db_account.last_name = account.last_name
-        db_account.profile_image = account.profile_image
-
-        session.commit()
-
-        logging.info('Updated account!')
-
-        return {'token': savory_token_client.create_savory_token(db_account)}, HTTP_STATUS_OK
+    return {'token': savory_token_client.create_savory_token(account)}, HTTP_STATUS_OK
 
 
 def get_account(account_id):

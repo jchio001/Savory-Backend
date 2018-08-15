@@ -15,7 +15,7 @@ logging.basicConfig(level=logging.INFO)
 @app.route('/connect', methods=['GET'])
 @ValidateFacebookToken
 def connect_with_social_platform(facebook_account):
-    response_dict, status_code = account_client.create_or_update_existing_profile(facebook_account)
+    response_dict, status_code = account_client.create_or_update_existing_account(facebook_account)
     return json.dumps(response_dict), status_code
 
 
