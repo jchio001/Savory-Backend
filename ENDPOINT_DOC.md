@@ -69,8 +69,8 @@ Returns:
 
 ## (GET) /account/me/photos?last_id={<photo_id>}
 
-This endpoint is getting a page of 15 photos the token's owner has uploaded after a given photo (last_id represents the 
-id of this photo). If last_id is not passed in, the 15 most recently uploaded photos will be returned.
+This endpoint is getting a page of 15 photos the token's owner has uploaded with ids less than last_Id. If last_id is 
+not passed in, the 15 most recently uploaded photos will be returned.
 
 Requires:
 - `Authorization (Header)`: A JWT auth token that originated from our backend
@@ -96,7 +96,6 @@ account is following (this includes the account in question as well!). If last_i
 recently uploaded photos are returned. Else, the 10 most recently uploaded photos with an id less than last_id will be 
 returned.
 
-Requires:
 Requires:
 - `Authorization (Header)`: A JWT auth token that originated from our backend
 - `last_id (URL parameter)`: The id of the photo to fetch relative to.
