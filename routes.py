@@ -29,7 +29,7 @@ def get_my_profile(account):
 @app.route('/account/me/photos', methods=['GET'])
 @ValidateToken
 def get_my_photos(account):
-    photos_page = photo_client.get_photos_page_for_account(account, request.args.get('last_id'))
+    photos_page = photo_client.get_stubbed_photos(account, request.args.get('last_id'))
     return json.dumps(list(map(Photo.to_dict, photos_page))), HTTP_STATUS_OK
 
 
@@ -37,6 +37,13 @@ def get_my_photos(account):
 @ValidateToken
 def post_photo(account):
     response_dict, status_code = photo_client.post_photo(account, request)
+    return json.dumps(response_dict), status_code
+
+
+@app.route('/following/photos', methods=['GET'])
+@ValidateToken
+def get_photos_for_feed(account):
+    response_dict, status_code = photo_client.get_photos_for_feed(account, request.args.get('last_id'))
     return json.dumps(response_dict), status_code
 
 

@@ -45,8 +45,13 @@ def get_account(account_id):
 
 def get_account_info(account):
     return AccountInfo(account=account,
-                       photos_page=photo_client.get_photos_page_for_account()).to_dict(), \
+                       photos_page=photo_client.get_stubbed_photos()).to_dict(), \
            HTTP_STATUS_OK
+
+
+# TODO: Have this return the ids of all accounts being followed by the passed in account.
+def get_following_accounts(account):
+    return {account.id}
 
 
 class AccountInfo:

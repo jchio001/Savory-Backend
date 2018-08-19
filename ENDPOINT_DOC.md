@@ -88,3 +88,28 @@ Returns:
     ...
 ]
 ```
+
+## (GET) /following/photos
+
+This endpoint is for retrieving a page of 10 photos for the user's feed. Photos are fetched from all accounts an
+account is following (this includes the account in question as well!). If last_id is not passed in, the 10 most 
+recently uploaded photos are returned. Else, the 10 most recently uploaded photos with an id less than last_id will be 
+returned.
+
+Requires:
+Requires:
+- `Authorization (Header)`: A JWT auth token that originated from our backend
+- `last_id (URL parameter)`: The id of the photo to fetch relative to.
+
+Returns:
+```
+[
+    {
+        "id": <Integer> The id of the photo
+        "account_id": <Integer> The id of the account that posted it
+        "photo_url": <String> The url of the photo
+        "creation_date": <Long> The upload time in epoch time
+    },
+    ...
+]
+```
