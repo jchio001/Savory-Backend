@@ -39,12 +39,18 @@ class Photo(base):
     id = Column(Integer, Sequence('photo_id_sequence', start=1, increment=1), primary_key=True)
     account_id = Column(Integer, ForeignKey('account.id'), nullable=False, index=True)
     photo_url = Column(String, nullable=False)
+    google_place_id = Column(String, nullable=False, index=True)
+    # By attaching the Google place name to the Photo object, we can avoid querying Google Places for information,
+    # which makes the code simpler and faster!
+    google_place_name = Column(String, nullable=False)
     creation_date = Column(DateTime(timezone=True), server_default=func.now(), nullable=False, index=True)
 
     def to_dict(self):
         return {'id': self.id,
                 'account_id': self.account_id,
                 'photo_url': self.photo_url,
+                'place_id': self.google_place_id,
+                'name': self.google_place_name,
                 'creation_date': int(self.creation_date.timestamp())}
 
 

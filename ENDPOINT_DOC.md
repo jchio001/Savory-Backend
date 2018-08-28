@@ -26,6 +26,8 @@ Requires:
 - `Authorization (Header)`: A JWT auth token that originated from our backend
 - `Content-Type (Header)`: Should be set to `multipart/form-data`
 - `image (Body, form-data)`: An image to be posted to the Savory platform
+- `place_id (Body, form_data)`: The place_id of the restaurant the photo is attached to. This will be validated 
+server-sided.
 
 Returns:
 ```
