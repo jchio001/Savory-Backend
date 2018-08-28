@@ -48,8 +48,7 @@ def post_photo(account, request):
         return {'error': 'Failed to upload image!'}, HTTP_STATUS_BAD_REQUEST
 
 
-STUBBED_PHOTO_URL = 'https://instagram.fsnc1-1.fna.fbcdn.net/vp/221ff3b2f4a886a11b95d1dcd6b0ef73/5BF33D47' \
-                    '/t51.2885-15/e35/38240443_573642699698521_4433770773466841088_n.jpg'
+STUBBED_PHOTO_URL = 'https://pbs.twimg.com/media/CgM7-d2XIAAaZ3m.jpg'
 
 
 # Returns a page of 15 photos.
