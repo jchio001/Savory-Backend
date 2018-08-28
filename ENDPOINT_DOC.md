@@ -35,6 +35,8 @@ Returns:
     "id": <Integer>. The id of the photo
     "account_id": <Integer>. The id of the account that posted it
     "photo_url": <String>. The url of the uploaded image
+    "place_id": <String>. The Google place id of the restaurant this photo maps to
+    "place_name": <String>. The name of the restaurant this photo maps to
     "creation_date": <Long>. The upload date in epoch time
 }
 ```
@@ -62,6 +64,8 @@ Returns:
             "id": <Integer> The id of the photo
             "account_id": <Integer> The id of the account that posted it
             "photo_url": <String> The url of the photo
+            "place_id": <String>. The Google place id of the restaurant this photo maps to
+            "place_name": <String>. The name of the restaurant this photo maps to
             "creation_date": <Long> The upload time in epoch time
         },
         ...

@@ -50,7 +50,7 @@ class Photo(base):
                 'account_id': self.account_id,
                 'photo_url': self.photo_url,
                 'place_id': self.google_place_id,
-                'name': self.google_place_name,
+                'place_name': self.google_place_name,
                 'creation_date': int(self.creation_date.timestamp())}
 
 
