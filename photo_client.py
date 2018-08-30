@@ -5,22 +5,19 @@ from status_codes import HTTP_STATUS_OK, HTTP_STATUS_BAD_REQUEST, HTTP_STATUS_IN
 from sqlalchemy import desc
 
 import account_client
-import google_places_client
 import logging
 import s3_client
+import yelp_client
 
 
 def post_photo(account, request):
-    place_id = request.form.get('place_id')
-    if not place_id:
-        return {'error': 'Missing place_id.'}, HTTP_STATUS_BAD_REQUEST
+    yelp_id = request.form.get('yelp_id')
+    if not yelp_id:
+        return {'error': 'Missing yelp_id.'}, HTTP_STATUS_BAD_REQUEST
 
-    place_response = google_places_client.get_google_place(place_id)
-    if place_response:
-        if not place_response.is_successful():
-            return {'error': 'Invalid place_id.'}, HTTP_STATUS_BAD_REQUEST
-    else:
-        return {'error': 'Google places API error. Try again later'}, HTTP_STATUS_INTERNAL_SERVER_ERROR
+    restaurant = yelp_client.get_restaurant(yelp_id)
+    if not restaurant:
+        return {'error': 'Invalid yelp_id'}, HTTP_STATUS_INTERNAL_SERVER_ERROR
 
     if 'image' not in request.files:
         return {'error': 'No image attached!'}, HTTP_STATUS_BAD_REQUEST
@@ -29,14 +26,13 @@ def post_photo(account, request):
 
     try:
         account_id = account.id
-        place = place_response.place
 
         photo_url = s3_client.upload_photo(account_id, file)
 
         photo = Photo(account_id=account_id,
                       photo_url=photo_url,
-                      google_place_id=place.place_id,
-                      google_place_name=place.name)
+                      yelp_id=restaurant.id,
+                      restaurant_name=restaurant.name)
 
         session.add(photo)
         session.flush()

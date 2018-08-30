@@ -40,6 +40,7 @@ For security reasons, a lot of critical constant values are hidden in environmen
 - JWT secret (`SAVORY_JWT_SECRET`)
 - Access key for AWS (`SAVORY_AWS_ACCESS_KEY_ID`)
 - Secret key for AWS (`SAVORY_AWS_SECRET_KEY`)
+- API key for Yelp (`SAVORY_YELP_API_KEY`)
 
 There is some amount of irony in this statement because this application is in a stage where no one cares enough to do 
 something malicious with that information. If you are one of those people, I'm pretty sure browsing cat pictures on 

@@ -26,7 +26,7 @@ Requires:
 - `Authorization (Header)`: A JWT auth token that originated from our backend
 - `Content-Type (Header)`: Should be set to `multipart/form-data`
 - `image (Body, form-data)`: An image to be posted to the Savory platform
-- `place_id (Body, form_data)`: The place_id of the restaurant the photo is attached to. This will be validated 
+- `yelp_id (Body, form_data)`: The Yelp id of the restaurant the photo is attached to. This will be validated 
 server-sided.
 
 Returns:
@@ -35,8 +35,8 @@ Returns:
     "id": <Integer>. The id of the photo
     "account_id": <Integer>. The id of the account that posted it
     "photo_url": <String>. The url of the uploaded image
-    "place_id": <String>. The Google place id of the restaurant this photo maps to
-    "place_name": <String>. The name of the restaurant this photo maps to
+    "yelp_id": <String>. The Yelp id of the restaurant this photo maps to
+    "restaurant_name": <String>. The name of the restaurant this photo maps to
     "creation_date": <Long>. The upload date in epoch time
 }
 ```
@@ -64,8 +64,8 @@ Returns:
             "id": <Integer> The id of the photo
             "account_id": <Integer> The id of the account that posted it
             "photo_url": <String> The url of the photo
-            "place_id": <String>. The Google place id of the restaurant this photo maps to
-            "place_name": <String>. The name of the restaurant this photo maps to
+            "yelp_id": <String>. The Yelp id of the restaurant this photo maps to
+            "restaurant_name": <String>. The name of the restaurant this photo maps to
             "creation_date": <Long> The upload time in epoch time
         },
         ...
@@ -89,6 +89,8 @@ Returns:
         "id": <Integer> The id of the photo
         "account_id": <Integer> The id of the account that posted it
         "photo_url": <String> The url of the photo
+        "yelp_id": <String>. The Yelp id of the restaurant this photo maps to
+        "restaurant_name": <String>. The name of the restaurant this photo maps to
         "creation_date": <Long> The upload time in epoch time
     },
     ...
@@ -113,6 +115,8 @@ Returns:
         "id": <Integer> The id of the photo
         "account_id": <Integer> The id of the account that posted it
         "photo_url": <String> The url of the photo
+        "yelp_id": <String>. The Yelp id of the restaurant this photo maps to
+        "restaurant_name": <String>. The name of the restaurant this photo maps to
         "creation_date": <Long> The upload time in epoch time
     },
     ...
