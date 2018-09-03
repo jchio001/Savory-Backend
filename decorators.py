@@ -51,7 +51,7 @@ def ValidateToken(f):
             response.status_code = HTTP_STATUS_UNAUTHORIZED
             return response
 
-        return f(*args, account=account, **kwargs)
+        return f(*args, **kwargs, account=account)
 
     return validate_token
 
