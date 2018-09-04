@@ -1,7 +1,7 @@
 from sqlalchemy import BigInteger, create_engine, Column, DateTime, ForeignKey, Integer, Sequence, String, \
     UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.sql import func
 
 import os
@@ -52,6 +52,17 @@ class Photo(base):
                 'yelp_id': self.yelp_id,
                 'restaurant_name': self.restaurant_name,
                 'creation_date': int(self.creation_date.timestamp())}
+
+
+# Read this table as: User <follow_id> follows User <followed_account_id>
+class FollowRelationship(base):
+    __tablename__ = 'follow_relationship'
+
+    follower_id = Column(Integer, ForeignKey('account.id'), nullable=False, index=True, primary_key=True)
+    followed_account_id = Column(Integer, ForeignKey('account.id'), nullable=False, index=True, primary_key=True)
+
+    follower_account = relationship(Account, uselist=False, back_populates="follow_relationship")
+    followed_account = relationship(Account, uselist=False, back_populates="follow_relationship")
 
 
 # Sets up a sqlalchemy session
