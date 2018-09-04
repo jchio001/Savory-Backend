@@ -11,10 +11,10 @@ db = create_engine(db_url)
 base = declarative_base()
 
 
-class Account(base):
-    __tablename__ = 'account'
+class User(base):
+    __tablename__ = 'user'
 
-    id = Column(Integer, Sequence('account_id_seq', start=1, increment=1), primary_key=True)
+    id = Column(Integer, Sequence('user_id_seq', start=1, increment=1), primary_key=True)
     social_profile_id = Column(BigInteger, nullable=False)
     social_profile_type = Column(String, nullable=False)
     first_name = Column(String, nullable=False)
@@ -37,7 +37,7 @@ class Photo(base):
     __tablename__ = 'photo'
 
     id = Column(Integer, Sequence('photo_id_sequence', start=1, increment=1), primary_key=True)
-    account_id = Column(Integer, ForeignKey('account.id'), nullable=False, index=True)
+    user_id = Column(Integer, ForeignKey('user.id'), nullable=False, index=True)
     photo_url = Column(String, nullable=False)
     yelp_id = Column(String, nullable=False, index=True)
     # By attaching the name fetched from Yelp to the Photo object, we can avoid querying Yelp for information, which
@@ -47,22 +47,22 @@ class Photo(base):
 
     def to_dict(self):
         return {'id': self.id,
-                'account_id': self.account_id,
+                'user_id': self.user_id,
                 'photo_url': self.photo_url,
                 'yelp_id': self.yelp_id,
                 'restaurant_name': self.restaurant_name,
                 'creation_date': int(self.creation_date.timestamp())}
 
 
-# Read this table as: User <follow_id> follows User <followed_account_id>
+# Read this table as: User <follow_id> follows User <followed_user_id>
 class FollowRelationship(base):
     __tablename__ = 'follow_relationship'
 
-    follower_id = Column(Integer, ForeignKey('account.id'), nullable=False, index=True, primary_key=True)
-    followed_account_id = Column(Integer, ForeignKey('account.id'), nullable=False, index=True, primary_key=True)
+    follower_id = Column(Integer, ForeignKey('user.id'), nullable=False, index=True, primary_key=True)
+    followed_user_id = Column(Integer, ForeignKey('user.id'), nullable=False, index=True, primary_key=True)
 
-    follower_account = relationship(Account, uselist=False, back_populates="follow_relationship")
-    followed_account = relationship(Account, uselist=False, back_populates="follow_relationship")
+    follower_user = relationship(User, uselist=False, back_populates="follow_relationship")
+    followed_user = relationship(User, uselist=False, back_populates="follow_relationship")
 
 
 # Sets up a sqlalchemy session

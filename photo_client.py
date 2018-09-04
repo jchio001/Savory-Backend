@@ -4,13 +4,13 @@ from models import Photo, session
 from status_codes import HTTP_STATUS_OK, HTTP_STATUS_BAD_REQUEST, HTTP_STATUS_INTERNAL_SERVER_ERROR
 from sqlalchemy import desc
 
-import account_client
+import user_client
 import logging
 import s3_client
 import yelp_client
 
 
-def post_photo(account, request):
+def post_photo(user, request):
     yelp_id = request.form.get('yelp_id')
     if not yelp_id:
         return {'error': 'Missing yelp_id.'}, HTTP_STATUS_BAD_REQUEST
@@ -25,7 +25,7 @@ def post_photo(account, request):
     file = request.files.get('image')
 
     try:
-        account_id = account.id
+        account_id = user.id
 
         photo_url = s3_client.upload_photo(account_id, file)
 
@@ -48,7 +48,7 @@ STUBBED_PHOTO_URL = 'https://pbs.twimg.com/media/CgM7-d2XIAAaZ3m.jpg'
 
 
 # Returns a page of 15 photos.
-def get_stubbed_photos(account=None, last_id=None):
+def get_stubbed_photos(user=None, last_id=None):
     stubbed_page = list()
 
     photo = Photo(id=32432, account_id=23432423, photo_url=STUBBED_PHOTO_URL, creation_date=datetime.today())
@@ -64,12 +64,12 @@ def get_photos(account_ids, last_id, page_size=15):
     if last_id:
         photo_page_query = photo_page_query.filter(Photo.id < last_id)
 
-    return photo_page_query.filter(Photo.account_id.in_(account_ids))\
+    return photo_page_query.filter(Photo.user_id.in_(account_ids))\
         .order_by(desc(Photo.creation_date)) \
         .limit(page_size)
 
 
-def get_photos_for_feed(account, last_id):
-    following_account_ids = account_client.get_following_accounts(account)
+def get_photos_for_feed(user, last_id):
+    following_account_ids = user_client.get_following_accounts(user)
     photos_page = get_photos(following_account_ids, last_id, 10)
     return list(map(Photo.to_dict, photos_page)), HTTP_STATUS_OK

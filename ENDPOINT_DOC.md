@@ -3,8 +3,8 @@ base URL to hit up endpoints for our server is http://savory-backend.herokuapp.c
 
 ## (GET) /connect?token={facebook_token}
 
-This endpoint is for logging in/creating an account to the Savory platform. If an account already exists under the 
-token's Facebook account, a new account will not be created. In exchange for a Facebook token, this endpoint will 
+This endpoint is for logging in/creating an user to the Savory platform. If an user already exists under the 
+token's Facebook user, a new user will not be created. In exchange for a Facebook token, this endpoint will 
 exchange it for a JWT auth token that is used to access our platform.
 
 Requires:
@@ -33,7 +33,7 @@ Returns:
 ```
 {
     "id": <Integer>. The id of the photo
-    "account_id": <Integer>. The id of the account that posted it
+    "user_id": <Integer>. The id of the user that posted it
     "photo_url": <String>. The url of the uploaded image
     "yelp_id": <String>. The Yelp id of the restaurant this photo maps to
     "restaurant_name": <String>. The name of the restaurant this photo maps to
@@ -41,10 +41,10 @@ Returns:
 }
 ```
 
-## (GET) /account/me
+## (GET) /user/me
 
 This endpoint is for getting the profile of the token's owner. By exposing this endpoint, this means that the client 
-won't need to maintain the account's id as well, and can rely purely on the token to get information.
+won't need to maintain the user's id as well, and can rely purely on the token to get information.
 
 Requires:
 -`Authorization (Header)`: A JWT auth token from the Savory platform
@@ -52,17 +52,17 @@ Requires:
 Returns:
 ```
 {
-    "account": {
-        "id": <Integer> The id of the account
-        "first_name": <String> The first name of the account's owner
-        "last_name": <String> The last name of the account's owner'
-        "profile_image": <String> The account's profile picture,
-        "creation_date": <Long>. The account's creation date in epoch time
+    "user": {
+        "id": <Integer> The id of the user
+        "first_name": <String> The first name of the user's owner
+        "last_name": <String> The last name of the user's owner'
+        "profile_image": <String> The user's profile picture,
+        "creation_date": <Long>. The user's creation date in epoch time
     },
     "photos": [
         {
             "id": <Integer> The id of the photo
-            "account_id": <Integer> The id of the account that posted it
+            "user_id": <Integer> The id of the user that posted it
             "photo_url": <String> The url of the photo
             "yelp_id": <String>. The Yelp id of the restaurant this photo maps to
             "restaurant_name": <String>. The name of the restaurant this photo maps to
@@ -73,7 +73,7 @@ Returns:
 }
 ```
 
-## (GET) /account/me/photos?last_id={<photo_id>}
+## (GET) /user/me/photos?last_id={<photo_id>}
 
 This endpoint is getting a page of 15 photos the token's owner has uploaded with ids less than last_Id. If last_id is 
 not passed in, the 15 most recently uploaded photos will be returned.
@@ -87,7 +87,7 @@ Returns:
 [
     {
         "id": <Integer> The id of the photo
-        "account_id": <Integer> The id of the account that posted it
+        "user_id": <Integer> The id of the user that posted it
         "photo_url": <String> The url of the photo
         "yelp_id": <String>. The Yelp id of the restaurant this photo maps to
         "restaurant_name": <String>. The name of the restaurant this photo maps to
@@ -99,8 +99,8 @@ Returns:
 
 ## (GET) /following/photos
 
-This endpoint is for retrieving a page of 10 photos for the user's feed. Photos are fetched from all accounts an
-account is following (this includes the account in question as well!). If last_id is not passed in, the 10 most 
+This endpoint is for retrieving a page of 10 photos for the user's feed. Photos are fetched from all users an
+user is following (this includes the user in question as well!). If last_id is not passed in, the 10 most 
 recently uploaded photos are returned. Else, the 10 most recently uploaded photos with an id less than last_id will be 
 returned.
 
@@ -113,7 +113,7 @@ Returns:
 [
     {
         "id": <Integer> The id of the photo
-        "account_id": <Integer> The id of the account that posted it
+        "user_id": <Integer> The id of the user that posted it
         "photo_url": <String> The url of the photo
         "yelp_id": <String>. The Yelp id of the restaurant this photo maps to
         "restaurant_name": <String>. The name of the restaurant this photo maps to

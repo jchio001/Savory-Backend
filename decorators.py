@@ -4,7 +4,7 @@ from functools import wraps
 from jwt import DecodeError
 from status_codes import HTTP_STATUS_BAD_REQUEST, HTTP_STATUS_UNAUTHORIZED
 
-import account_client
+import user_client
 import facebook_client
 import savory_token_client
 import time
@@ -38,9 +38,9 @@ def ValidateToken(f):
             response.status_code = HTTP_STATUS_BAD_REQUEST
             return response
 
-        account = account_client.get_account(decoded_token.get('id'))
+        user = user_client.get_user(decoded_token.get('id'))
 
-        if not account:
+        if not user:
             response = jsonify({'error': 'Account id does not exist in the system.'})
             response.status_code = HTTP_STATUS_BAD_REQUEST
             return response
@@ -51,7 +51,7 @@ def ValidateToken(f):
             response.status_code = HTTP_STATUS_UNAUTHORIZED
             return response
 
-        return f(*args, **kwargs, account=account)
+        return f(*args, **kwargs, user=user)
 
     return validate_token
 
