@@ -73,6 +73,27 @@ Returns:
 }
 ```
 
+## (GET) /user/me/following (UNSTABLE)
+
+This endpoint retrieves the users the token's owner is currently following.
+
+Requires:
+-`Authorization (Header)`: A JWT auth token from the Savory platform
+
+Returns:
+```
+[
+    "user": {
+        "id": <Integer> The id of the user
+        "first_name": <String> The first name of the user's owner
+        "last_name": <String> The last name of the user's owner'
+        "profile_image": <String> The user's profile picture,
+        "creation_date": <Long>. The user's creation date in epoch time
+    },
+    ...
+]
+```
+
 ## (GET) /user/me/photos?last_id={<photo_id>}
 
 This endpoint is getting a page of 15 photos the token's owner has uploaded with ids less than last_Id. If last_id is 

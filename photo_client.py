@@ -25,11 +25,11 @@ def post_photo(user, request):
     file = request.files.get('image')
 
     try:
-        account_id = user.id
+        user_id = user.id
 
-        photo_url = s3_client.upload_photo(account_id, file)
+        photo_url = s3_client.upload_photo(user_id, file)
 
-        photo = Photo(account_id=account_id,
+        photo = Photo(user_id=user_id,
                       photo_url=photo_url,
                       yelp_id=restaurant.id,
                       restaurant_name=restaurant.name)
@@ -51,25 +51,27 @@ STUBBED_PHOTO_URL = 'https://pbs.twimg.com/media/CgM7-d2XIAAaZ3m.jpg'
 def get_stubbed_photos(user=None, last_id=None):
     stubbed_page = list()
 
-    photo = Photo(id=32432, account_id=23432423, photo_url=STUBBED_PHOTO_URL, creation_date=datetime.today())
+    photo = Photo(id=32432, user_id=23432423, photo_url=STUBBED_PHOTO_URL, creation_date=datetime.today())
     for i in range(0, 15):
         stubbed_page.append(photo)
 
     return stubbed_page
 
 
-def get_photos(account_ids, last_id, page_size=15):
+def get_photos(user_ids, last_id, page_size=15):
     photo_page_query = session.query(Photo)
 
     if last_id:
         photo_page_query = photo_page_query.filter(Photo.id < last_id)
 
-    return photo_page_query.filter(Photo.user_id.in_(account_ids))\
+    return photo_page_query.filter(Photo.user_id.in_(user_ids))\
         .order_by(desc(Photo.creation_date)) \
         .limit(page_size)
 
 
 def get_photos_for_feed(user, last_id):
-    following_account_ids = user_client.get_following_accounts(user)
+    following_account_ids = user_client.get_followed_user_ids_for_user(user)
+    following_account_ids.append(user.id)
+
     photos_page = get_photos(following_account_ids, last_id, 10)
     return list(map(Photo.to_dict, photos_page)), HTTP_STATUS_OK

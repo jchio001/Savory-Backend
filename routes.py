@@ -26,6 +26,13 @@ def get_my_profile(*args, **kwargs):
     return json.dumps(response_dict), status_code
 
 
+@app.route('/user/me/following')
+@ValidateToken
+def get_users_being_followed_by_me(*args, **kwargs):
+    followed_users_dict_list, status_code = user_client.get_followed_users_for_user(kwargs.get('user'))
+    return json.dumps(followed_users_dict_list), status_code
+
+
 @app.route('/user/me/photos', methods=['GET'])
 @ValidateToken
 def get_my_photos(*args, **kwargs):

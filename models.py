@@ -34,7 +34,7 @@ class User(base):
 
 
 class Photo(base):
-    __tablename__ = 'photo'
+    __tablename__ = 'photos'
 
     id = Column(Integer, Sequence('photo_id_sequence', start=1, increment=1), primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'), nullable=False, index=True)
@@ -61,8 +61,12 @@ class FollowRelationship(base):
     follower_id = Column(Integer, ForeignKey('user.id'), nullable=False, index=True, primary_key=True)
     followed_user_id = Column(Integer, ForeignKey('user.id'), nullable=False, index=True, primary_key=True)
 
-    follower_user = relationship(User, uselist=False, back_populates="follow_relationship")
-    followed_user = relationship(User, uselist=False, back_populates="follow_relationship")
+    follower_user = relationship(User,
+                                 uselist=False,
+                                 foreign_keys=[follower_id])
+    followed_user = relationship(User,
+                                 uselist=False,
+                                 foreign_keys=[followed_user_id])
 
 
 # Sets up a sqlalchemy session

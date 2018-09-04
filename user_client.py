@@ -1,9 +1,8 @@
-import facebook_client
 import logging
 import photo_client
 import savory_token_client
 
-from models import User, Photo, session
+from models import FollowRelationship, User, Photo, session
 from sqlalchemy.exc import IntegrityError
 from status_codes import HTTP_STATUS_OK
 
@@ -18,14 +17,14 @@ def create_or_update_existing_account(facebook_account):
     if not user:
         try:
             user = User(social_profile_id=facebook_account.id, social_profile_type='facebook',
-                           first_name=facebook_account.first_name, last_name=facebook_account.last_name,
-                           profile_image=facebook_account.profile_image)
+                        first_name=facebook_account.first_name, last_name=facebook_account.last_name,
+                        profile_image=facebook_account.profile_image)
             session.add(user)
             session.flush()
             session.commit()
         except IntegrityError:
             session.rollback()
-            logging.warning('Account already exists in the system!')
+            logging.warning('User already exists in the system!')
 
             user = session \
                 .query(User) \
@@ -37,9 +36,9 @@ def create_or_update_existing_account(facebook_account):
 
 
 def get_user(user_id):
-    return session\
-        .query(User)\
-        .filter_by(id=user_id)\
+    return session \
+        .query(User) \
+        .filter_by(id=user_id) \
         .first()
 
 
@@ -49,9 +48,20 @@ def get_user_info(user):
            HTTP_STATUS_OK
 
 
-# TODO: Have this return the ids of all accounts being followed by the passed in account.
-def get_following_accounts(user):
-    return {user.id}
+# Following as in the users this user follows
+def get_followed_user_ids_for_user(user):
+    return session \
+        .query(FollowRelationship.followed_user_id) \
+        .filter_by(follower_id=user.id) \
+        .all()
+
+
+def get_followed_users_for_user(user):
+    following_relationships = session \
+        .query(FollowRelationship, User) \
+        .filter_by(follower_id=user.id) \
+        .all()
+    return list(map(lambda f: f.followed_user.to_dict, following_relationships)), HTTP_STATUS_OK
 
 
 class UserInfo:
