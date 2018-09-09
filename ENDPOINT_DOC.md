@@ -73,7 +73,7 @@ Returns:
 }
 ```
 
-## (GET) /user/me/following (UNSTABLE)
+## (GET) /user/me/following
 
 This endpoint retrieves the users the token's owner is currently following.
 

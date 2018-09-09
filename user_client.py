@@ -52,16 +52,18 @@ def get_user_info(user):
 def get_followed_user_ids_for_user(user):
     return session \
         .query(FollowRelationship.followed_user_id) \
-        .filter_by(follower_id=user.id) \
+        .filter_by(follower_user_id=user.id) \
         .all()
 
 
+# Given a user, gets the users that they are following.
 def get_followed_users_for_user(user):
     following_relationships = session \
-        .query(FollowRelationship, User) \
-        .filter_by(follower_id=user.id) \
+        .query(FollowRelationship) \
+        .join(User, User.id == FollowRelationship.followed_user_id) \
+        .filter(FollowRelationship.follower_user_id == user.id) \
         .all()
-    return list(map(lambda f: f.followed_user.to_dict, following_relationships)), HTTP_STATUS_OK
+    return list(map(lambda f: f.followed_user.to_dict(), following_relationships)), HTTP_STATUS_OK
 
 
 class UserInfo:

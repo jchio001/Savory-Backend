@@ -58,12 +58,12 @@ class Photo(base):
 class FollowRelationship(base):
     __tablename__ = 'follow_relationship'
 
-    follower_id = Column(Integer, ForeignKey('user.id'), nullable=False, index=True, primary_key=True)
+    follower_user_id = Column(Integer, ForeignKey('user.id'), nullable=False, index=True, primary_key=True)
     followed_user_id = Column(Integer, ForeignKey('user.id'), nullable=False, index=True, primary_key=True)
 
     follower_user = relationship(User,
                                  uselist=False,
-                                 foreign_keys=[follower_id])
+                                 foreign_keys=[follower_user_id])
     followed_user = relationship(User,
                                  uselist=False,
                                  foreign_keys=[followed_user_id])
