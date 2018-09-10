@@ -27,14 +27,14 @@ def exchange_token(*args, **kwargs):
     return json.dumps(response_dict), HTTP_STATUS_OK
 
 
-@app.route('/user/me')
+@app.route('/user/me', methods=['GET'])
 @ValidateToken
 def get_my_profile(*args, **kwargs):
     response_dict, status_code = user_client.get_user_info(kwargs.get('user'))
     return json.dumps(response_dict), status_code
 
 
-@app.route('/user/me/following')
+@app.route('/user/me/following', methods=['GET'])
 @ValidateToken
 def get_users_being_followed_by_me(*args, **kwargs):
     followed_users_dict_list, status_code = user_client.get_followed_users_for_user(kwargs.get('user'))
