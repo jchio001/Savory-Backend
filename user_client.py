@@ -61,7 +61,9 @@ def get_followed_users_for_user(user):
     following_relationships = session \
         .query(FollowRelationship) \
         .join(User, User.id == FollowRelationship.followed_user_id) \
-        .filter(FollowRelationship.follower_user_id == user.id) \
+        .filter(FollowRelationship.follower_user_id == user.id,
+                # Ignore pycharm complaining this.
+                FollowRelationship.is_deleted == False) \
         .all()
     return list(map(lambda f: f.followed_user.to_dict(), following_relationships)), HTTP_STATUS_OK
 
