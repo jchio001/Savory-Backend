@@ -1,4 +1,4 @@
-from sqlalchemy import BigInteger, create_engine, Column, DateTime, ForeignKey, Integer, Sequence, String, \
+from sqlalchemy import BigInteger, Boolean, create_engine, Column, DateTime, ForeignKey, Integer, Sequence, String, \
     UniqueConstraint
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
@@ -60,6 +60,7 @@ class FollowRelationship(base):
 
     follower_user_id = Column(Integer, ForeignKey('user.id'), nullable=False, index=True, primary_key=True)
     followed_user_id = Column(Integer, ForeignKey('user.id'), nullable=False, index=True, primary_key=True)
+    is_deleted = Column(Boolean, nullable=False, default=False)
 
     follower_user = relationship(User,
                                  uselist=False,

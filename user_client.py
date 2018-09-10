@@ -66,6 +66,36 @@ def get_followed_users_for_user(user):
     return list(map(lambda f: f.followed_user.to_dict(), following_relationships)), HTTP_STATUS_OK
 
 
+def follow_user(follower_user, followed_user):
+    follow_relationship = FollowRelationship(follower_user_id=follower_user.id,
+                                             followed_user_id=followed_user.id)
+
+    try:
+        session.add(follow_relationship)
+        session.flush()
+        session.commit()
+    except IntegrityError:
+        logging.info('Follow relationship already exists in the system!')
+        session.rollback()
+        session.query(FollowRelationship) \
+            .filter_by(follower_user_id=follower_user.id,
+                       followed_user_id=followed_user.id)\
+            .update({'is_deleted': False})
+
+        session.commit()
+
+    return {'following': True}, HTTP_STATUS_OK
+
+
+def unfollow_user(follower_user, followed_user):
+    session.query(FollowRelationship) \
+        .filter_by(follower_user_id=follower_user.id,
+                   followed_user_id=followed_user.id) \
+        .update({'is_deleted': True})
+    session.commit()
+    return {'following': False}, HTTP_STATUS_OK
+
+
 class UserInfo:
 
     def __init__(self, user, photos_page):

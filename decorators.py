@@ -41,7 +41,7 @@ def ValidateToken(f):
         user = user_client.get_user(decoded_token.get('id'))
 
         if not user:
-            response = jsonify({'error': 'Account id does not exist in the system.'})
+            response = jsonify({'error': 'User id does not exist in the system.'})
             response.status_code = HTTP_STATUS_BAD_REQUEST
             return response
 
@@ -54,6 +54,34 @@ def ValidateToken(f):
         return f(*args, **kwargs, user=user)
 
     return validate_token
+
+
+# Given a user id in a URI path, validates where or not the user is a valid user/exists in our database.
+def ValidateUserId(f):
+    @wraps(f)
+    def validate_user(*args, **kwargs):
+        try:
+            if 'user_id' in kwargs:
+                user_id = int(kwargs.get('user_id'))
+            else:
+                response = jsonify({'error': 'user_id not present in path.'})
+                response.status_code = HTTP_STATUS_BAD_REQUEST
+                return response
+        except ValueError:
+            response = jsonify({'error': 'Invalid user id.'})
+            response.status_code = HTTP_STATUS_BAD_REQUEST
+            return response
+
+        user = user_client.get_user(user_id)
+
+        if not user:
+            response = jsonify({'error': 'User id does not exist in the system.'})
+            response.status_code = HTTP_STATUS_BAD_REQUEST
+            return response
+
+        return f(*args, **kwargs, user_in_uri=user)
+
+    return validate_user
 
 
 # This decorator converts a token from Facebook into a FacebookAccount object and passes that object into the endpoint

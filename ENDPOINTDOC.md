@@ -108,6 +108,34 @@ Returns:
 ]
 ```
 
+## (GET) /user/<user_id>/follow
+
+This endpoint follows the user referenced by the token to the user associated with user_id.
+
+Requires:
+-`Authorization (Header)`: A JWT auth token from the Savory platform
+
+Returns:
+```
+{
+    "following": true
+}
+```
+
+## (GET) /user/<user_id>/unfollow
+
+This endpoint unfollows the user referenced by the token to the user associated with user_id.
+
+Requires:
+-`Authorization (Header)`: A JWT auth token from the Savory platform
+
+Returns:
+```
+{
+    "following": false
+}
+```
+
 ## (GET) /user/me/photos?last_id={<photo_id>}
 
 This endpoint is getting a page of 15 photos the token's owner has uploaded with ids less than last_Id. If last_id is 

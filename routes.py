@@ -4,7 +4,7 @@ import photo_client
 import savory_token_client
 import user_client
 
-from decorators import ValidateFacebookToken, ValidateToken
+from decorators import ValidateFacebookToken, ValidateToken, ValidateUserId
 from flask import Flask, request
 from models import Photo
 from status_codes import HTTP_STATUS_OK
@@ -39,6 +39,24 @@ def get_my_profile(*args, **kwargs):
 def get_users_being_followed_by_me(*args, **kwargs):
     followed_users_dict_list, status_code = user_client.get_followed_users_for_user(kwargs.get('user'))
     return json.dumps(followed_users_dict_list), status_code
+
+
+@app.route('/user/<user_id>/follow', methods=['POST'])
+@ValidateToken
+@ValidateUserId
+def follow_user(*args, **kwargs):
+    response_dict, status_code = user_client.follow_user(kwargs.get('user'),
+                                                         kwargs.get('user_in_uri'))
+    return json.dumps(response_dict), status_code
+
+
+@app.route('/user/<user_id>/unfollow', methods=['POST'])
+@ValidateToken
+@ValidateUserId
+def unfollow_user(*args, **kwargs):
+    response_dict, status_code = user_client.unfollow_user(kwargs.get('user'),
+                                                           kwargs.get('user_in_uri'))
+    return json.dumps(response_dict), status_code
 
 
 @app.route('/user/me/photos', methods=['GET'])
