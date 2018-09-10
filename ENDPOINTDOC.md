@@ -17,6 +17,20 @@ Returns:
 }
 ```
 
+## (GET) /token
+
+This endpoint is for exchanging a JWT auth token from our platform for a newer one.
+
+Requires:
+- `Authorization (Header)`: A JWT auth token that originated from our backend
+
+Returns:
+```
+{
+  'token': <String>. A JWT auth token that provides the client access to other endpoints of our platform
+}
+```
+
 ## (POST) /photo
 
 This endpoint is for uploading photos to the Savory platform. It'll take in a photo, upload it to a S3 bucket, and 

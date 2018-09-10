@@ -1,7 +1,8 @@
 import json
 import logging
-import user_client
 import photo_client
+import savory_token_client
+import user_client
 
 from decorators import ValidateFacebookToken, ValidateToken
 from flask import Flask, request
@@ -17,6 +18,13 @@ logging.basicConfig(level=logging.INFO)
 def connect_with_social_platform(*args, **kwargs):
     response_dict, status_code = user_client.create_or_update_existing_account(kwargs.get('facebook_account'))
     return json.dumps(response_dict), status_code
+
+
+@app.route('/token', methods=['GET'])
+@ValidateToken
+def exchange_token(*args, **kwargs):
+    response_dict = {'token': savory_token_client.create_savory_token(kwargs.get('user'))}
+    return json.dumps(response_dict), HTTP_STATUS_OK
 
 
 @app.route('/user/me')
