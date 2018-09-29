@@ -1,0 +1,7 @@
+{
+  "name": "savory-api",
+  "description": "A backend servce that powers the Savory mobile applications.",
+  "repository": "https://github.com/jchio001/Savory-Backend",
+  "logo": "https://i.imgur.com/pyiHPzV.png",
+  "keywords": ["python", "python 3.0", "postgresql"]
+}

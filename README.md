@@ -62,6 +62,9 @@ virtualenv running. If not, please run it and try again.
 - Don't write spaghetti code
 - Actually QA your code before submitting a pull request
 - Maybe one day unit tests will be a requirement
+- Consider pushing to a dev server first & testing on that. Press this button to do so:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/jchio001/Savory-Backend)
 
 ## License
 
